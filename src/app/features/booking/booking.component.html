@@ -1,0 +1,83 @@
+<div class="booking-container">
+  <header class="header">
+    <div class="header-text">
+      <h1>Scheduler</h1>
+      <p>Organize your tutorials and personal streaming sessions</p>
+    </div>
+    <button class="btn-add" (click)="openModal()">
+      <i class="pi pi-calendar-plus"></i> New Schedule
+    </button>
+  </header>
+
+  <div class="schedule-list">
+    <div class="empty-state" *ngIf="bookings.length === 0">
+      <i class="pi pi-calendar"></i>
+      <p>No upcoming schedules. Start planning your week!</p>
+    </div>
+
+    <div class="booking-item" *ngFor="let item of bookings">
+      <div class="date-badge">
+        <span class="day">{{ item.date | date:'dd' }}</span>
+        <span class="month">{{ item.date | date:'MMM' }}</span>
+      </div>
+      
+      <div class="item-details">
+        <span class="category-tag" [ngClass]="item.category.replace(' ', '-').toLowerCase()">
+          {{ item.category }}
+        </span>
+        <h3>{{ item.title }}</h3>
+        <div class="meta">
+          <span><i class="pi pi-clock"></i> {{ item.time || 'TBD' }}</span>
+          <span><i class="pi pi-map-marker"></i> Online Session</span>
+        </div>
+      </div>
+
+      <button class="btn-delete" (click)="remove(item.id)">
+        <i class="pi pi-trash"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" *ngIf="isModalOpen">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>Schedule Activity</h2>
+        <i class="pi pi-times" (click)="closeModal()"></i>
+      </div>
+      
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Activity Title</label>
+          <input type="text" [(ngModel)]="form.title" placeholder="e.g. Morning Vinyasa Flow">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Date</label>
+            <input type="date" [(ngModel)]="form.date">
+          </div>
+          <div class="form-group">
+            <label>Time</label>
+            <input type="time" [(ngModel)]="form.time">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Category</label>
+          <select [(ngModel)]="form.category">
+            <option>Video Tutorial</option>
+            <option>Live Stream</option>
+            <option>Personal Plan</option>
+          </select>
+        </div>
+      </div>
+
+      <footer class="modal-footer">
+        <button class="btn-secondary" (click)="closeModal()">Cancel</button>
+        <button class="btn-confirm" (click)="save()" [disabled]="!form.title || !form.date">
+          Confirm Schedule
+        </button>
+      </footer>
+    </div>
+  </div>
+</div>

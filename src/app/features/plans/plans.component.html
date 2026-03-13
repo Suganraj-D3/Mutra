@@ -1,0 +1,43 @@
+<div class="plan-container">
+  <div class="activation-box" *ngIf="showCodeInput">
+    <h3>Activate {{ pendingPlanId | uppercase }} Plan</h3>
+    <p>Enter your activation code to continue:</p>
+    
+    <input 
+      type="text" 
+      [(ngModel)]="activationCode" 
+      placeholder="Enter Code"
+      class="code-input"
+    >
+    
+    <div class="error-msg" *ngIf="errorMessage">{{ errorMessage }}</div>
+    
+    <div class="actions">
+      <button class="btn-confirm" (click)="verifyAndActivate()">Activate</button>
+      <button class="btn-cancel" (click)="cancelActivation()">Cancel</button>
+    </div>
+  </div>
+
+  <div class="grid" [class.blur]="showCodeInput">
+    <div 
+      *ngFor="let plan of plans" 
+      class="card" 
+      [class.active]="selectedPlanId === plan.id"
+      (click)="selectPlan(plan.id)"
+    >
+      <div *ngIf="plan.recommended" class="badge">Recommended</div>
+      <h3>{{ plan.name }}</h3>
+      <div class="price">{{ plan.price }}<span>/mo</span></div>
+      
+      <ul class="features">
+        <li *ngFor="let feature of plan.features">
+          <span class="check">✓</span> {{ feature }}
+        </li>
+      </ul>
+
+      <button [class.selected]="selectedPlanId === plan.id">
+        {{ selectedPlanId === plan.id ? 'Active' : 'Choose Plan' }}
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<div class="dashboard-container">
+  <div class="dashboard-content">
+    <main class="main-content">
+      <div class="msg">
+        <h4>Welcome, {{ user?.name | uppercase }}!</h4>
+        <p>Start Exploring With {{title}} Playlists</p>
+      </div>
+
+      <div class="video-grid">
+        <div class="video-card" *ngFor="let vid of videos">
+          <div class="video-wrapper">
+            <div class="thumbnail" *ngIf="playingVideo !== vid" (click)="playVideo(vid)">
+              <img [src]="vid.thumbnail" alt="{{ vid.title }}">
+              <div class="play-overlay pi pi-play"></div>
+            </div>
+            <iframe
+              *ngIf="playingVideo === vid"
+              [src]="getSafeUrl(vid.url + '?autoplay=1')"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          </div>
+
+          <div class="video-info">
+            <h3>{{ vid.title }}</h3>
+            <div class="meta">
+              <span class="source">{{title}}</span>
+              <button class="play-hint" (click)="alerting()">NO : {{vid.ids+1}}</button> 
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

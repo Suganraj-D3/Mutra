@@ -1,0 +1,171 @@
+$primary-color: #007bff;
+$success-color: #28a745;
+$border-color: #e0e0e0;
+$text-muted: #666;
+$transition-speed: 0.3s;
+
+.plan-container {
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  padding: 3rem 1rem;
+  text-align: center;
+
+  .grid {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+}
+
+.card {
+  background: #fff;
+  border: 2px solid $border-color;
+  border-radius: 1rem;
+  padding: 2rem;
+  width: 280px;
+  cursor: pointer;
+  position: relative;
+  transition: all $transition-speed ease;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    transform: translateY(-8px);
+    border-color: $primary-color;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  }
+
+  &.active {
+    border-color: $primary-color;
+    background-color: rgba($primary-color, 0.02);
+    box-shadow: 0 10px 30px rgba($primary-color, 0.15);
+
+    button {
+      background: $primary-color;
+      color: #fff;
+    }
+  }
+
+  &.recommended {
+    border-color: $primary-color;
+    
+    .badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: $primary-color;
+      color: #fff;
+      padding: 0.25rem 1rem;
+      border-radius: 1rem;
+      font-size: 0.75rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #333;
+  }
+
+  .price {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 1rem 0;
+    
+    span {
+      font-size: 1rem;
+      color: $text-muted;
+      font-weight: 400;
+    }
+  }
+
+  .features {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0 2rem;
+    text-align: left;
+    flex-grow: 1;
+
+    li {
+      margin-bottom: 0.75rem;
+      color: #444;
+      display: flex;
+      align-items: center;
+
+      .check {
+        color: $success-color;
+        margin-right: 10px;
+        font-weight: bold;
+      }
+    }
+  }
+
+  button {
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 0.5rem;
+    border: 2px solid $primary-color;
+    background: transparent;
+    color: $primary-color;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background $transition-speed;
+
+    &:hover {
+      background: rgba($primary-color, 0.1);
+    }
+  }
+}
+
+
+.activation-box {
+  background: #f8f9fa;
+  border: 2px solid #007bff;
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 400px;
+  margin: 0 auto 20px auto;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+
+  .code-input {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .error-msg {
+    color: #dc3545;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+
+    button {
+      padding: 8px 20px;
+      cursor: pointer;
+      border-radius: 4px;
+      border: none;
+    }
+
+    .btn-confirm { background: #007bff; color: white; }
+    .btn-cancel { background: #6c757d; color: white; }
+  }
+}
+
+.grid.blur {
+  filter: blur(2px);
+  pointer-events: none;
+  opacity: 0.6;
+}

@@ -1,0 +1,19 @@
+:host{
+    --bg-side:none;
+    --bg-main:none;
+}
+
+.app-body{
+    display: flex;
+    gap: 1vh;
+}
+.sidebar{
+    background-color: var(--bg-side);
+    width: 15vw;
+    height: 92vh;
+}
+.content{
+    background-color: var(--bg-main);
+    width: 84vw;
+    height: 92vh;
+}

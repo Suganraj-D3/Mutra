@@ -1,0 +1,53 @@
+<div class="workspace-container">
+  <header class="workspace-header">
+    <div class="title-group">
+      <h1>{{title}} Notes</h1>
+      <p>Personal workspace for <strong>{{ userName }}</strong></p>
+    </div>
+    <button class="btn-primary" (click)="toggleEditor()">
+      <i class="pi" [ngClass]="isEditorOpen ? 'pi-times' : 'pi-plus'"></i>
+      {{ isEditorOpen ? 'Close' : 'New Note' }}
+    </button>
+  </header>
+
+  <section class="editor-panel" *ngIf="isEditorOpen">
+    <div class="editor-card">
+      <input 
+        type="text" 
+        [(ngModel)]="newNoteTitle" 
+        placeholder="Note Title (Optional)"
+        class="title-input">
+      <textarea 
+        [(ngModel)]="newNoteContent" 
+        placeholder="Start typing your thoughts..."
+        rows="5"></textarea>
+      <div class="editor-footer">
+        <button class="btn-ghost" (click)="toggleEditor()">Cancel</button>
+        <button class="btn-save" (click)="saveNote()" [disabled]="!newNoteContent.trim()">
+          Save to Workspace
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="notes-grid">
+    <div class="empty-state" *ngIf="notes.length === 0 && !isEditorOpen">
+      <i class="pi pi-inbox"></i>
+      <h3>Your workspace is empty</h3>
+      <p>Click "New Note" to start capturing ideas.</p>
+    </div>
+
+    <div class="note-card" *ngFor="let note of notes">
+      <div class="card-body">
+        <h3 *ngIf="note.title">{{ note.title }}</h3>
+        <p>{{ note.content }}</p>
+      </div>
+      <div class="card-footer">
+        <span class="date">{{ note.createdAt | date:'mediumDate' }}</span>
+        <button class="delete-icon" (click)="deleteNote(note.id)">
+          <i class="pi pi-trash"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+</div>

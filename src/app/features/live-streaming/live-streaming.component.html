@@ -1,0 +1,74 @@
+<div class="stream-container">
+  <div class="video-section">
+    <div class="video-card">
+      <div class="video-header">
+        <div class="session-info">
+          <div class="live-status" *ngIf="isBroadcasting || activeSessionName">
+            <span class="pulse-dot"></span>
+            <span class="status-text">LIVE</span>
+          </div>
+          <h3>{{ activeSessionName || title +" Live Streamer" }}</h3>
+        </div>
+        <div class="video-controls-top" *ngIf="isBroadcasting">
+          <span class="instructor-tag"><i class="pi pi-spin pi-cog"></i> Broadcasting</span>
+        </div>
+        <div class="video-controls-top" *ngIf="!isBroadcasting">
+          <span class="instructor-tag">
+            <i class="pi pi-discord"></i> 
+            Receiver Mode
+          </span>
+        </div>
+      </div>
+      <div class="video-viewport">
+        <video #videoElement autoplay playsinline></video>
+        
+        <div class="video-placeholder" *ngIf="!isBroadcasting && !activeSessionName">
+          <div class="placeholder-content">
+            <i class="pi pi-video"></i>
+            <p>Ready to start your session?</p>
+            <span>Select an active class from the sidebar or start your own.</span>
+          </div>
+        </div>
+      </div>
+      <div class="video-footer">
+        <div class="action-bar">
+          <button *ngIf="!isBroadcasting" class="btn-start" (click)="startBroadcast()">
+            <i class="pi pi-video"></i> Go Live Now
+          </button>
+          <button *ngIf="isBroadcasting" class="btn-stop" (click)="stopBroadcast()">
+            <i class="pi pi-stop-circle"></i> End Session
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aside class="sidebar-sessions">
+    <div class="sidebar-header">
+      <h4><i class="pi pi-users"></i> Active Classes</h4>
+      <span class="count-badge">{{ availableStreams.length || "-" }}</span>
+    </div>
+    <div class="stream-feed">
+      <div class="session-card" *ngFor="let s of availableStreams">
+        <div class="card-body">
+          <div class="user-profile">
+            <div class="avatar-ring">
+              <div class="avatar-content">{{ s.userName[0] }}</div>
+            </div>
+            <div class="user-meta">
+              <span class="user-name">{{ s.userName }}</span>
+              <span class="session-type">Yoga Live stream</span>
+            </div>
+          </div>
+          <button class="btn-join" (click)="joinStream(s)">
+            Join <i class="pi pi-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+      <div class="empty-feed" *ngIf="availableStreams.length === 0">
+        <i class="pi pi-calendar"></i>
+        <p>No classes live</p>
+        <span>Check back later or start a new session.</span>
+      </div>
+    </div>
+  </aside>
+</div>

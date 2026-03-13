@@ -1,0 +1,21 @@
+:host{
+    --bg-white:white;
+    --bg-head-text:black;
+}
+::ng-deep .custom-sidebar-menu {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    display: flex;
+    flex-direction: column;
+    .p-menu-list {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        background-color: var(--bg-white);
+    }
+    .p-submenu-header {
+        color: var(--bg-head-text) !important;
+    }
+}

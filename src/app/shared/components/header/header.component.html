@@ -1,0 +1,19 @@
+<header class="app-header">
+  <div class="header-left">
+    <div class="logo-container">
+      <h1 class="app-title">{{title | uppercase}}</h1>
+    </div>
+    <div class="v-divider"></div>
+    <span class="system-label">{{roleText}}</span>
+  </div>
+
+  <div class="header-right" *ngIf="userexist">
+    <div class="user-profile">
+      <div class="avatar">{{avatar}}</div>
+      <span class="username">{{username}}</span>
+      <button class="pi pi-sign-out login-btn logout" (click)="logout()" *ngIf="isLoggedIn">
+        Logout
+      </button>
+    </div>
+  </div>
+</header>

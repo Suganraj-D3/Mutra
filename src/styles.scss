@@ -1,1 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
+*{
+    padding: 0;
+    margin: 0;
+}
+
+
+html,body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+.nav-items .p-tabmenu-nav, 
+.nav-items .p-menuitem-link {
+    border: none !important;
+    background: transparent !important;
+}
+
+.nav-items .p-menuitem-text {
+    color: var(--text-white) !important;
+}
+
+.nav-items .p-tabmenuitem.p-highlight .p-menuitem-link {
+    border-bottom: 2px solid #22c55e !important;
+}

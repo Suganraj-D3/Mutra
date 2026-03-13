@@ -1,0 +1,97 @@
+:host {
+  --header-bg: #1e293b;
+  --header-accent: #3b82f6;
+  --text-white: #f8fafc;
+  --text-muted: #94a3b8;
+}
+
+.app-header {
+  height: 8vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  background: linear-gradient(90deg, #1e293b 0%, #0f172a 100%);
+  color: var(--text-white);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.app-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #ffffff;
+  margin: 0;
+  border-left: 4px solid var(--header-accent);
+  padding-left: 12px;
+}
+
+.v-divider {
+  width: 1px;
+  height: 24px;
+  background-color: #334155;
+}
+
+.system-label {
+  font-size: 0.85rem;
+  color: var(--text-white);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.user-profile {
+  display: flex;
+  color: var(--text-white);
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.user-profile:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  background-color: var(--header-accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.login-btn {
+  background-color:#1B263B;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+  
+  &:hover {
+    background-color: #16a34a;
+  }
+
+  &.logout {
+    background-color: #ef4444;
+    &:hover { background-color: #b91c1c; }
+  }
+}

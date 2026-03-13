@@ -1,0 +1,41 @@
+<header class="app-header">
+    <div class="header-left">
+        <div class="logo-container">
+            
+            <h1 class="app-title">{{title}}</h1>
+        </div>
+        <div class="v-divider"></div>
+        <span class="system-label">{{roleText}}</span>
+    </div>
+
+    <div class="header-right">
+        <p-tabMenu [model]="items" styleClass="nav-items"></p-tabMenu>
+        <button class="pi pi-sign-in login-btn" (click)="login()" *ngIf="!isLoggedIn">
+            Login
+        </button>
+        <button class="pi pi-sign-out login-btn logout" (click)="logout()" *ngIf="isLoggedIn">
+            Logout
+        </button>
+    </div>
+</header>
+
+<div class="main-content">
+    <section id="home" class="hero-section">
+        <div class="hero-overlay">
+            <h1 class="hero-text">Recover your inner balance</h1><br>
+            <p class="hero-msg">Guided Yoga Practice With Mutra Academy</p>
+        </div>
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="about-container">
+            <h2>ABOUT {{title}}</h2>
+            <div class="underline"></div>
+            <p [innerHTML]="Abouttext"></p>
+        </div>
+    </section>
+
+    <app-footer></app-footer>
+
+</div>
+

@@ -3,7 +3,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { authCodeFlowConfig } from './auth.config';
 import { Router } from '@angular/router';
-import { Observable, of, switchMap, map, BehaviorSubject } from 'rxjs';
+import { Observable, of, switchMap, map, BehaviorSubject, forkJoin } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class AuthService {
 
   async initAuth(): Promise<void> {
     this.oauthService.configure(authCodeFlowConfig);
-    this.oauthService.setStorage(localStorage);
+    // this.oauthService.setStorage(localStorage);
     const success = await this.oauthService.loadDiscoveryDocumentAndTryLogin();
     
     if (success && this.oauthService.hasValidAccessToken()) {
@@ -41,6 +41,7 @@ export class AuthService {
   }
 
   login() {
+    console.log("loging called sugan...");
     this.oauthService.initCodeFlow();
   }
 
@@ -128,7 +129,11 @@ export class AuthService {
       observe: 'response' 
     }).pipe(
       switchMap((response: HttpResponse<any>) => {
-        const userId = response.headers.get('Location')?.split('/').pop() || '';
+        const fullUrl = response.headers.get('Location');
+        console.log('Full Location Header URL:', fullUrl);
+        const userId = fullUrl?.split('/').pop() || '';
+        console.log('Extracted User ID:', userId);
+
         return this.getRoleByName(selectedRole).pipe(
           switchMap(roleObj => this.assignRoleToUser(userId, [roleObj])),
           switchMap(() => {
@@ -159,39 +164,47 @@ export class AuthService {
       switchMap(clients => {
         if (!clients || clients.length === 0) throw new Error("Client 'realm-management' not found.");
         const clientUuid = clients[0].id;
-        return this.getClientRoles(clientUuid).pipe(
-          switchMap(allRoles => {
-            const privs = ['manage-users', 'view-users', 'query-groups', 'query-users', 'view-realm', 'assign-roles', 'view-clients', 'query-clients'];
-            const rolesToAssign = allRoles.filter(r => privs.includes(r.name));
-            return this.assignClientRolesToUser(userId, clientUuid, rolesToAssign);
+        return forkJoin({
+          allClientRoles: this.getClientRoles(clientUuid),
+          studentRole: this.getRoleByName('student')
+        }).pipe(
+          switchMap(({ allClientRoles, studentRole }) => {
+            const privs = [
+              'manage-users', 'view-users', 'query-groups', 
+              'query-users', 'view-realm', 'assign-roles', 
+              'view-clients', 'query-clients'
+            ];
+            const clientRolesToAssign = allClientRoles.filter(r => privs.includes(r.name));
+            return forkJoin([
+              this.assignClientRolesToUser(userId, clientUuid, clientRolesToAssign),
+              this.assignRoleToUser(userId, [studentRole]) 
+            ]);
           })
         );
       })
     );
   }
 
-
-  private readonly PLAN_PREFIX = 'user_plan_';
   private planSubject = new BehaviorSubject<string>('free');
   currentPlan$ = this.planSubject.asObservable();
 
-updatePlan(planId: string) {
-  const userName = this.getUserName();
-  const body = { username: userName, planId: planId };
-  
-  this.http.post(`${this.baseUrl}/api/yoga/plan`, body).subscribe(() => {
-    this.planSubject.next(planId);
-  });
-}
-
-loadPlanForCurrentUser() {
-  const userName = this.getUserName();
-  if (!userName) return;
-
-  this.http.get<string>(`${this.baseUrl}/api/yoga/plan/${userName}`, { responseType: 'text' as 'json' })
-    .subscribe(plan => {
-      this.planSubject.next(plan);
+  updatePlan(planId: string) {
+    const userName = this.getUserName();
+    const body = { username: userName, planId: planId };
+    
+    this.http.post(`${this.baseUrl}/api/yoga/plan`, body).subscribe(() => {
+      this.planSubject.next(planId);
     });
-}
+  }
+
+  loadPlanForCurrentUser() {
+    const userName = this.getUserName();
+    if (!userName) return;
+
+    this.http.get<string>(`${this.baseUrl}/api/yoga/plan/${userName}`, { responseType: 'text' as 'json' })
+      .subscribe(plan => {
+        this.planSubject.next(plan);
+      });
+  }
 
 }

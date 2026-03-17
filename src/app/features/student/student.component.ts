@@ -84,7 +84,8 @@ export class StudentComponent implements OnInit {
       error: (err) => this.lessonService.ErrorCaller(err)
     });
   }
-
+  
+//this button will be commented in student  component.html
   GetLessons() {
     alert("The output will be displayed in the console... to watch press (F12)");
     this.lessonService.GetLessonsList().subscribe({

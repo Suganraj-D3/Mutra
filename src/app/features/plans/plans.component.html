@@ -25,13 +25,15 @@
       [class.active]="selectedPlanId === plan.id"
       (click)="selectPlan(plan.id)"
     >
-      <div *ngIf="plan.recommended" class="badge">Recommended</div>
-      <h3>{{ plan.name }}</h3>
-      <div class="price">{{ plan.price }}<span>/mo</span></div>
+      
+      <h3><i *ngIf="plan.icon" [class]="plan.icon + ' mr-2'"></i>
+        {{ plan.name }}</h3>
+      <div class="price">{{ plan.price }}<span>/M</span></div>
+      <div *ngIf="plan.recommended" class="badge blowing">Recommended</div>
       
       <ul class="features">
         <li *ngFor="let feature of plan.features">
-          <span class="check">✓</span> {{ feature }}
+          <span class="pi pi-check check"></span> {{ feature }}
         </li>
       </ul>
 

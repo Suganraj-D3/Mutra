@@ -56,7 +56,7 @@ $transition-speed: 0.3s;
       left: 50%;
       transform: translateX(-50%);
       background: $primary-color;
-      color: #fff;
+      color: #3ee51c;
       padding: 0.25rem 1rem;
       border-radius: 1rem;
       font-size: 0.75rem;
@@ -168,4 +168,13 @@ $transition-speed: 0.3s;
   filter: blur(2px);
   pointer-events: none;
   opacity: 0.6;
+}
+
+.blowing{
+  color: goldenrod;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.icon-badge{
+  color: orange;
 }

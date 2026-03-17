@@ -61,6 +61,9 @@ export class AdminComponent implements OnInit {
 
   resetForm() {
     this.newUser = { username: '', email: '', firstName: '', lastName: '', password: '' };
+    setTimeout(() => {
+    this.message = '';
+  }, 3000);
   }
 
   selectUserForEdit(user: any) {
@@ -95,6 +98,8 @@ export class AdminComponent implements OnInit {
         const rolesToRemove = currentRoles.filter(
           r => r.name !== 'default-roles-mutra'
         );
+        console.log('Roles being sent for deletion:', rolesToRemove);
+        if (rolesToRemove.length === 0) return of(null);
         return this.auth.deleteUserRole(userId, rolesToRemove);
       }),
 
@@ -117,6 +122,7 @@ export class AdminComponent implements OnInit {
 
         this.loadUsers();
         this.selectedUser = null;
+        this.resetForm();
         this.isError = false;
       },
       error: (err) => {

@@ -50,12 +50,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
     
     if(currentPlan === 'vip'){
       menuItems[0].items?.push({ 
-        label: 'Notes', 
+        label: `Notes - PRO `, 
         icon: 'pi pi-pencil', 
         routerLink: '/notes' 
       },
       { 
-        label: 'Bookings', 
+        label: 'Schedule - VIP', 
         icon: 'pi pi-calendar-plus', 
         routerLink: '/bookings' 
       });

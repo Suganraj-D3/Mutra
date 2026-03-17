@@ -7,6 +7,7 @@ interface Plan {
   price: string;
   features: string[];
   recommended?: boolean;
+  icon?: string;
 }
 
 @Component({
@@ -21,9 +22,9 @@ export class PlansComponent implements OnInit{
   pendingPlanId: string = '';
   errorMessage: string = '';
   plans: Plan[] = [
-    { id: 'free', name: 'Free', price: '$0', features: ['Video tutorials', 'Live streaming'] },
-    { id: 'pro', name: 'Pro', price: '$19', features: ['Video tutorials', 'Live streaming', 'Post messages'], recommended: true },
-    { id: 'vip', name: 'VIP', price: '$49', features: ['All features included', 'Priority support'] }
+    { id: 'free', name: 'Free', price: '$0', features: ['Video tutorials', 'Live streaming'],icon: 'pi pi-gift'},
+    { id: 'pro', name: 'Pro', price: '$19', features: ['Video tutorials', 'Live streaming', 'Post Notes'], recommended: true,icon: 'pi pi-tag' },
+    { id: 'vip', name: 'VIP', price: '$49', features: ['All features included', 'Priority support'],recommended: true,icon: 'pi pi-ticket' }
   ];
 
   constructor(private authService: AuthService) {}
@@ -31,6 +32,7 @@ export class PlansComponent implements OnInit{
 
   ngOnInit() {
     this.authService.currentPlan$.subscribe(plan => {
+      console.log("Plan is: "+  plan);
       this.selectedPlanId = plan;
     });
   }
